@@ -1,6 +1,7 @@
 
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import numpy as np
 import joblib
 import json
@@ -316,7 +317,6 @@ st.caption(
 
 st.subheader("Historical Customer Churn Distribution")
 
-import plotly.express as px
 
 churn_counts = (
     df_dashboard["ChurnLabel"]
