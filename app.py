@@ -87,6 +87,120 @@ st.sidebar.info(
 )
 
 # --------------------------------------------------
+
+# --------------------------------------------------
+# DASHBOARD OVERVIEW
+# --------------------------------------------------
+
+@st.cache_data
+def load_customer_data():
+    path = os.path.join(DEPLOYMENT_PATH, "cleaned_customer_churn.csv")
+    return pd.read_csv(path)
+
+df_dashboard = load_customer_data()
+
+st.header("📊 Dashboard Overview")
+
+total_customers = len(df_dashboard)
+churned_customers = (df_dashboard["ChurnLabel"] == "Yes").sum()
+retained_customers = (df_dashboard["ChurnLabel"] == "No").sum()
+historical_churn_rate = churned_customers / total_customers * 100
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Total Customers", f"{total_customers:,}")
+col2.metric("Churned Customers", f"{churned_customers:,}")
+col3.metric("Retained Customers", f"{retained_customers:,}")
+col4.metric("Historical Churn Rate", f"{historical_churn_rate:.2f}%")
+
+st.caption(
+    "These are historical dataset statistics, not live customer counts."
+)
+
+st.subheader("Historical Customer Churn Distribution")
+
+import plotly.express as px
+
+churn_counts = (
+    df_dashboard["ChurnLabel"]
+    .value_counts()
+    .rename_axis("Customer Status")
+    .reset_index(name="Number of Customers")
+)
+
+fig_churn = px.pie(
+    churn_counts,
+    names="Customer Status",
+    values="Number of Customers",
+    hole=0.45,
+    title="Historical Churn Distribution"
+)
+
+st.plotly_chart(fig_churn, use_container_width=True)
+
+st.divider()
+
+# --------------------------------------------------
+# MODEL PERFORMANCE COMPARISON
+# --------------------------------------------------
+
+st.header("🏆 Machine Learning Model Performance")
+
+performance_data = pd.DataFrame({
+    "Model": [
+        "Random Forest",
+        "Gradient Boosting",
+        "Support Vector Machine",
+        "Logistic Regression",
+        "Decision Tree"
+    ],
+    "Accuracy": [0.9595, 0.9532, 0.9517, 0.9510, 0.9482],
+    "Precision": [0.9621, 0.8949, 0.8903, 0.8784, 0.9169],
+    "Recall": [0.8824, 0.9332, 0.9332, 0.9465, 0.8850],
+    "F1-Score": [0.9205, 0.9136, 0.9112, 0.9112, 0.9007],
+    "ROC-AUC": [0.9854, 0.9920, 0.9896, 0.9920, 0.9280]
+})
+
+st.dataframe(
+    performance_data.style.format({
+        "Accuracy": "{:.2%}",
+        "Precision": "{:.2%}",
+        "Recall": "{:.2%}",
+        "F1-Score": "{:.2%}",
+        "ROC-AUC": "{:.2%}"
+    }),
+    use_container_width=True,
+    hide_index=True
+)
+
+selected_metric = st.selectbox(
+    "Select evaluation metric",
+    ["Accuracy", "Precision", "Recall", "F1-Score", "ROC-AUC"]
+)
+
+fig_performance = px.bar(
+    performance_data,
+    x="Model",
+    y=selected_metric,
+    title=f"Model Comparison - {selected_metric}",
+    text=performance_data[selected_metric].map(lambda x: f"{x:.2%}")
+)
+
+fig_performance.update_layout(
+    yaxis_tickformat=".0%",
+    xaxis_title="Machine Learning Model",
+    yaxis_title=selected_metric
+)
+
+st.plotly_chart(fig_performance, use_container_width=True)
+
+st.caption(
+    "Performance metrics are from the original held-out test-set evaluation. "
+    "The screened Random Forest is not included in this five-model comparison."
+)
+
+st.divider()
+
 # CUSTOMER INPUT FORM
 # --------------------------------------------------
 
