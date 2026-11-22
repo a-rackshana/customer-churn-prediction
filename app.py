@@ -365,8 +365,4 @@ if submitted:
 
 st.divider()
 
-st.caption(
-    "Customer Churn Prediction System | Machine Learning Project | "
-    "Research prototype — not validated for live banking or "
-    "customer-retention decisions."
-)
+
