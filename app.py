@@ -99,6 +99,203 @@ def load_customer_data():
 
 df_dashboard = load_customer_data()
 
+
+# --------------------------------------------------
+# CUSTOMER RISK SEGMENTATION
+# --------------------------------------------------
+
+st.divider()
+st.header("🎯 Customer Risk Segmentation")
+
+st.write(
+    "Analyze historical customer records and classify their predicted "
+    "churn risk using the selected machine learning model."
+)
+
+# Prepare customer features
+batch_features = df_dashboard[selected_schema["feature_columns"]].copy()
+
+# Predict churn probability for all customers
+batch_probabilities = selected_model.predict_proba(
+    batch_features
+)[:, 1]
+
+batch_predictions = selected_model.predict(batch_features)
+
+# Create customer prediction report
+customer_risk_df = pd.DataFrame({
+    "CustomerID": df_dashboard["CustomerID"].values,
+    "Actual_Churn": df_dashboard["ChurnLabel"].values,
+    "Churn_Probability": batch_probabilities,
+    "Churn_Probability_Percentage": (
+        batch_probabilities * 100
+    ).round(2),
+    "Predicted_Churn": batch_predictions
+})
+
+# Classify risk
+customer_risk_df["Risk_Category"] = np.select(
+    [
+        customer_risk_df["Churn_Probability"] >= 0.70,
+        customer_risk_df["Churn_Probability"] >= 0.30
+    ],
+    [
+        "High Risk",
+        "Medium Risk"
+    ],
+    default="Low Risk"
+)
+
+# Retention recommendations
+retention_recommendations = {
+    "High Risk": (
+        "Priority personal contact, investigate service issues, "
+        "and provide a personalized retention offer."
+    ),
+    "Medium Risk": (
+        "Conduct satisfaction follow-ups, identify customer concerns, "
+        "and provide targeted retention offers."
+    ),
+    "Low Risk": (
+        "Maintain service quality, provide loyalty benefits, "
+        "and encourage continued engagement."
+    )
+}
+
+customer_risk_df["Retention_Recommendation"] = (
+    customer_risk_df["Risk_Category"]
+    .map(retention_recommendations)
+)
+
+# Risk summary
+risk_summary = (
+    customer_risk_df["Risk_Category"]
+    .value_counts()
+    .reindex(["High Risk", "Medium Risk", "Low Risk"], fill_value=0)
+    .reset_index()
+)
+
+risk_summary.columns = ["Risk Category", "Customers"]
+
+risk_summary["Percentage"] = (
+    risk_summary["Customers"] /
+    len(customer_risk_df) * 100
+).round(2)
+
+# Risk metrics
+high_count = (customer_risk_df["Risk_Category"] == "High Risk").sum()
+medium_count = (customer_risk_df["Risk_Category"] == "Medium Risk").sum()
+low_count = (customer_risk_df["Risk_Category"] == "Low Risk").sum()
+
+c1, c2, c3 = st.columns(3)
+
+c1.metric("High Risk Customers", f"{high_count:,}")
+c2.metric("Medium Risk Customers", f"{medium_count:,}")
+c3.metric("Low Risk Customers", f"{low_count:,}")
+
+# Risk distribution chart
+st.subheader("Customer Risk Distribution")
+
+fig_risk = px.pie(
+    risk_summary,
+    names="Risk Category",
+    values="Customers",
+    hole=0.45,
+    title="Predicted Customer Churn Risk"
+)
+
+st.plotly_chart(fig_risk, use_container_width=True)
+
+st.dataframe(
+    risk_summary,
+    use_container_width=True,
+    hide_index=True
+)
+
+st.caption(
+    "These are retrospective predictions on historical dataset records. "
+    "They are not validated forecasts of future customer churn."
+)
+
+# --------------------------------------------------
+# RETENTION STRATEGY MANAGEMENT
+# --------------------------------------------------
+
+st.divider()
+st.header("💡 Retention Strategy Management")
+
+st.write(
+    "Identify customers requiring attention and view their "
+    "recommended retention actions."
+)
+
+selected_risk = st.selectbox(
+    "Filter customers by risk category",
+    ["All Customers", "High Risk", "Medium Risk", "Low Risk"],
+    key="retention_risk_filter"
+)
+
+if selected_risk == "All Customers":
+    filtered_customers = customer_risk_df.copy()
+else:
+    filtered_customers = customer_risk_df[
+        customer_risk_df["Risk_Category"] == selected_risk
+    ].copy()
+
+st.metric(
+    "Customers in Selected Category",
+    f"{len(filtered_customers):,}"
+)
+
+st.dataframe(
+    filtered_customers[
+        [
+            "CustomerID",
+            "Churn_Probability_Percentage",
+            "Risk_Category",
+            "Retention_Recommendation"
+        ]
+    ],
+    use_container_width=True,
+    hide_index=True
+)
+
+# --------------------------------------------------
+# CUSTOMER REPORT DOWNLOAD
+# --------------------------------------------------
+
+st.divider()
+st.header("📥 Customer Reports")
+
+st.write(
+    "Download the complete customer churn prediction and "
+    "retention recommendation report."
+)
+
+csv_report = customer_risk_df.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    label="Download Complete Customer Retention Report",
+    data=csv_report,
+    file_name="customer_churn_retention_report.csv",
+    mime="text/csv"
+)
+
+high_risk_report = customer_risk_df[
+    customer_risk_df["Risk_Category"] == "High Risk"
+]
+
+high_risk_csv = high_risk_report.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    label="Download High-Risk Customer Report",
+    data=high_risk_csv,
+    file_name="high_risk_customers.csv",
+    mime="text/csv"
+)
+
+
+
 st.header("📊 Dashboard Overview")
 
 total_customers = len(df_dashboard)
