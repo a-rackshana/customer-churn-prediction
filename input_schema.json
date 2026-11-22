@@ -1,0 +1,413 @@
+{
+    "Original Random Forest": {
+        "feature_columns": [
+            "Gender",
+            "Age",
+            "Under30",
+            "SeniorCitizen",
+            "Married",
+            "Dependents",
+            "NumberofDependents",
+            "ReferredaFriend",
+            "Number_of_Referrals",
+            "TenureinMonths",
+            "Offer",
+            "PhoneService",
+            "AvgMonthlyLongDistanceCharges",
+            "MultipleLines",
+            "InternetService",
+            "InternetType",
+            "AvgMonthlyGBDownload",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtectionPlan",
+            "PremiumTechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "StreamingMusic",
+            "UnlimitedData",
+            "Contract",
+            "PaperlessBilling",
+            "PaymentMethod",
+            "MonthlyCharge",
+            "TotalCharges",
+            "TotalRefunds",
+            "TotalExtraDataCharges",
+            "TotalLongDistanceCharges",
+            "TotalRevenue",
+            "SatisfactionScore",
+            "CLTV"
+        ],
+        "numerical_features": [
+            "Age",
+            "NumberofDependents",
+            "Number_of_Referrals",
+            "TenureinMonths",
+            "AvgMonthlyLongDistanceCharges",
+            "AvgMonthlyGBDownload",
+            "MonthlyCharge",
+            "TotalCharges",
+            "TotalRefunds",
+            "TotalExtraDataCharges",
+            "TotalLongDistanceCharges",
+            "TotalRevenue",
+            "SatisfactionScore",
+            "CLTV"
+        ],
+        "categorical_features": [
+            "Gender",
+            "Under30",
+            "SeniorCitizen",
+            "Married",
+            "Dependents",
+            "ReferredaFriend",
+            "Offer",
+            "PhoneService",
+            "MultipleLines",
+            "InternetService",
+            "InternetType",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtectionPlan",
+            "PremiumTechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "StreamingMusic",
+            "UnlimitedData",
+            "Contract",
+            "PaperlessBilling",
+            "PaymentMethod"
+        ],
+        "defaults": {
+            "Age": 46.0,
+            "NumberofDependents": 0.0,
+            "Number_of_Referrals": 0.0,
+            "TenureinMonths": 29.0,
+            "AvgMonthlyLongDistanceCharges": 23.005000000000003,
+            "AvgMonthlyGBDownload": 17.0,
+            "MonthlyCharge": 70.45,
+            "TotalCharges": 1399.9499999999998,
+            "TotalRefunds": 0.0,
+            "TotalExtraDataCharges": 0.0,
+            "TotalLongDistanceCharges": 410.29999999999995,
+            "TotalRevenue": 2116.0699999999997,
+            "SatisfactionScore": 3.0,
+            "CLTV": 4529.5,
+            "Gender": "Male",
+            "Under30": "No",
+            "SeniorCitizen": "No",
+            "Married": "No",
+            "Dependents": "No",
+            "ReferredaFriend": "No",
+            "Offer": "Not Recorded",
+            "PhoneService": "Yes",
+            "MultipleLines": "No",
+            "InternetService": "Yes",
+            "InternetType": "Fiber Optic",
+            "OnlineSecurity": "No",
+            "OnlineBackup": "No",
+            "DeviceProtectionPlan": "No",
+            "PremiumTechSupport": "No",
+            "StreamingTV": "No",
+            "StreamingMovies": "No",
+            "StreamingMusic": "No",
+            "UnlimitedData": "Yes",
+            "Contract": "Month-to-Month",
+            "PaperlessBilling": "Yes",
+            "PaymentMethod": "Bank Withdrawal"
+        },
+        "options": {
+            "Gender": [
+                "Female",
+                "Male"
+            ],
+            "Under30": [
+                "No",
+                "Yes"
+            ],
+            "SeniorCitizen": [
+                "No",
+                "Yes"
+            ],
+            "Married": [
+                "No",
+                "Yes"
+            ],
+            "Dependents": [
+                "No",
+                "Yes"
+            ],
+            "ReferredaFriend": [
+                "No",
+                "Yes"
+            ],
+            "Offer": [
+                "Not Recorded",
+                "Offer A",
+                "Offer B",
+                "Offer C",
+                "Offer D",
+                "Offer E"
+            ],
+            "PhoneService": [
+                "No",
+                "Yes"
+            ],
+            "MultipleLines": [
+                "No",
+                "Yes"
+            ],
+            "InternetService": [
+                "No",
+                "Yes"
+            ],
+            "InternetType": [
+                "Cable",
+                "DSL",
+                "Fiber Optic",
+                "No Internet"
+            ],
+            "OnlineSecurity": [
+                "No",
+                "Yes"
+            ],
+            "OnlineBackup": [
+                "No",
+                "Yes"
+            ],
+            "DeviceProtectionPlan": [
+                "No",
+                "Yes"
+            ],
+            "PremiumTechSupport": [
+                "No",
+                "Yes"
+            ],
+            "StreamingTV": [
+                "No",
+                "Yes"
+            ],
+            "StreamingMovies": [
+                "No",
+                "Yes"
+            ],
+            "StreamingMusic": [
+                "No",
+                "Yes"
+            ],
+            "UnlimitedData": [
+                "No",
+                "Yes"
+            ],
+            "Contract": [
+                "Month-to-Month",
+                "One Year",
+                "Two Year"
+            ],
+            "PaperlessBilling": [
+                "No",
+                "Yes"
+            ],
+            "PaymentMethod": [
+                "Bank Withdrawal",
+                "Credit Card",
+                "Mailed Check"
+            ]
+        }
+    },
+    "Screened Random Forest": {
+        "feature_columns": [
+            "Gender",
+            "Age",
+            "Under30",
+            "SeniorCitizen",
+            "Married",
+            "Dependents",
+            "NumberofDependents",
+            "ReferredaFriend",
+            "Number_of_Referrals",
+            "TenureinMonths",
+            "Offer",
+            "PhoneService",
+            "AvgMonthlyLongDistanceCharges",
+            "MultipleLines",
+            "InternetService",
+            "InternetType",
+            "AvgMonthlyGBDownload",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtectionPlan",
+            "PremiumTechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "StreamingMusic",
+            "UnlimitedData",
+            "Contract",
+            "PaperlessBilling",
+            "PaymentMethod",
+            "MonthlyCharge"
+        ],
+        "numerical_features": [
+            "Age",
+            "NumberofDependents",
+            "Number_of_Referrals",
+            "TenureinMonths",
+            "AvgMonthlyLongDistanceCharges",
+            "AvgMonthlyGBDownload",
+            "MonthlyCharge"
+        ],
+        "categorical_features": [
+            "Gender",
+            "Under30",
+            "SeniorCitizen",
+            "Married",
+            "Dependents",
+            "ReferredaFriend",
+            "Offer",
+            "PhoneService",
+            "MultipleLines",
+            "InternetService",
+            "InternetType",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtectionPlan",
+            "PremiumTechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "StreamingMusic",
+            "UnlimitedData",
+            "Contract",
+            "PaperlessBilling",
+            "PaymentMethod"
+        ],
+        "defaults": {
+            "Age": 46.0,
+            "NumberofDependents": 0.0,
+            "Number_of_Referrals": 0.0,
+            "TenureinMonths": 29.0,
+            "AvgMonthlyLongDistanceCharges": 23.005000000000003,
+            "AvgMonthlyGBDownload": 17.0,
+            "MonthlyCharge": 70.45,
+            "Gender": "Male",
+            "Under30": "No",
+            "SeniorCitizen": "No",
+            "Married": "No",
+            "Dependents": "No",
+            "ReferredaFriend": "No",
+            "Offer": "Not Recorded",
+            "PhoneService": "Yes",
+            "MultipleLines": "No",
+            "InternetService": "Yes",
+            "InternetType": "Fiber Optic",
+            "OnlineSecurity": "No",
+            "OnlineBackup": "No",
+            "DeviceProtectionPlan": "No",
+            "PremiumTechSupport": "No",
+            "StreamingTV": "No",
+            "StreamingMovies": "No",
+            "StreamingMusic": "No",
+            "UnlimitedData": "Yes",
+            "Contract": "Month-to-Month",
+            "PaperlessBilling": "Yes",
+            "PaymentMethod": "Bank Withdrawal"
+        },
+        "options": {
+            "Gender": [
+                "Female",
+                "Male"
+            ],
+            "Under30": [
+                "No",
+                "Yes"
+            ],
+            "SeniorCitizen": [
+                "No",
+                "Yes"
+            ],
+            "Married": [
+                "No",
+                "Yes"
+            ],
+            "Dependents": [
+                "No",
+                "Yes"
+            ],
+            "ReferredaFriend": [
+                "No",
+                "Yes"
+            ],
+            "Offer": [
+                "Not Recorded",
+                "Offer A",
+                "Offer B",
+                "Offer C",
+                "Offer D",
+                "Offer E"
+            ],
+            "PhoneService": [
+                "No",
+                "Yes"
+            ],
+            "MultipleLines": [
+                "No",
+                "Yes"
+            ],
+            "InternetService": [
+                "No",
+                "Yes"
+            ],
+            "InternetType": [
+                "Cable",
+                "DSL",
+                "Fiber Optic",
+                "No Internet"
+            ],
+            "OnlineSecurity": [
+                "No",
+                "Yes"
+            ],
+            "OnlineBackup": [
+                "No",
+                "Yes"
+            ],
+            "DeviceProtectionPlan": [
+                "No",
+                "Yes"
+            ],
+            "PremiumTechSupport": [
+                "No",
+                "Yes"
+            ],
+            "StreamingTV": [
+                "No",
+                "Yes"
+            ],
+            "StreamingMovies": [
+                "No",
+                "Yes"
+            ],
+            "StreamingMusic": [
+                "No",
+                "Yes"
+            ],
+            "UnlimitedData": [
+                "No",
+                "Yes"
+            ],
+            "Contract": [
+                "Month-to-Month",
+                "One Year",
+                "Two Year"
+            ],
+            "PaperlessBilling": [
+                "No",
+                "Yes"
+            ],
+            "PaymentMethod": [
+                "Bank Withdrawal",
+                "Credit Card",
+                "Mailed Check"
+            ]
+        }
+    }
+}
